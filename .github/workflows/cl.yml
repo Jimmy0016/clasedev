@@ -4,7 +4,11 @@ on:
   push:
     branches:
       - quintob
-  pull_request:
+permissions:
+contents: read
+packages: write 
+
+pull_request:
 
 jobs:
   build:

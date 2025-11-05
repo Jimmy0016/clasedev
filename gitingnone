@@ -1,1 +1,28 @@
- 
+ STACK_NAME=holaflask
+IMAGE_NAME=holaflask:latest
+STACK_FILE=stack.yml
+
+build:
+	docker build -t $(IMAGE_NAME) .
+
+deploy: build
+	docker stack deploy -c $(STACK_FILE) $(STACK_NAME)
+
+up: deploy
+
+ps:
+	docker stack services $(STACK_NAME)
+
+tasks:
+	docker service ps $(STACK_NAME)_holaflask
+
+logs:
+	docker service logs -f $(STACK_NAME)_holaflask
+
+down:
+	docker stack rm $(STACK_NAME)
+
+clean:
+	docker rmi $(IMAGE_NAME) || true
+
+.PHONY: build deploy up ps tasks logs down clean
